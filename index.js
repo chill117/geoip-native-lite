@@ -97,6 +97,40 @@ var GeoIpNativeLite = module.exports = {
 		});
 	},
 
+	loadDataSync: function(options) {
+
+		options = _.defaults(options || {}, { ipv4: true, ipv6: false, cache: true });
+
+		var data = {};
+
+		if (options.ipv4) {
+
+			if (options.cache && cache.ipv4) {
+				data.ipv4 = cache.ipv4;
+			} else {
+				data.ipv4 = GeoIpNativeLite.loadDataFromFileSync('ipv4');
+			}
+		}
+
+		if (options.ipv6) {
+
+			if (options.cache && cache.ipv6) {
+				data.ipv6 = cache.ipv6;
+			} else {
+				data.ipv6 = GeoIpNativeLite.loadDataFromFileSync('ipv6');
+			}
+		}
+
+		if (options.cache) {
+			// Cache the data in memory.
+			_.each(data, function(_data, key) {
+				cache[key] || (cache[key] = _data);
+			});
+		}
+
+		return data;
+	},
+
 	loadDataFromFile: function(ipType, cb) {
 
 		var dataFile = GeoIpNativeLite._dataDir + '/country-' + ipType + '.json';
@@ -115,6 +149,14 @@ var GeoIpNativeLite = module.exports = {
 
 			cb(null, data);
 		});
+	},
+
+	loadDataFromFileSync: function(ipType) {
+
+		var dataFile = GeoIpNativeLite._dataDir + '/country-' + ipType + '.json';
+		var data = fs.readFileSync(dataFile, 'utf8');
+
+		return JSON.parse(data);
 	},
 
 	/*

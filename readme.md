@@ -29,7 +29,8 @@ This will install `geoip-native-lite` and add it to your application's `package.
 ## How to Use
 
 * [lookup](#lookup)
-* [loadData](#loadData)
+* [loadData](#loaddata)
+* [loadDataSync](#loaddatasync)
 
 ### lookup
 
@@ -82,6 +83,46 @@ GeoIpNativeLite.loadData(options, function(error, data) {
 		// Ready for lookups.
 	}
 });
+```
+
+Options:
+```js
+var options = {
+
+	/*
+		Set to TRUE to load ipv4 geoip data.
+
+		Default value is TRUE.
+	*/
+	ipv4: true,
+
+	/*
+		Set to TRUE to load ipv6 geoip data.
+
+		Default value is FALSE.
+	*/
+	ipv6: false,
+
+	/*
+		Set to TRUE to cache data in memory.
+
+		Default value is TRUE.
+	*/
+	cache: true
+};
+```
+
+### loadDataSync
+
+`loadDataSync([options])`
+
+Synchronously loads geoip data.
+
+Usage:
+```js
+var GeoIpNativeLite = require('geoip-native-lite');
+
+GeoIpNativeLite.loadDataSync(options);
 ```
 
 Options:
