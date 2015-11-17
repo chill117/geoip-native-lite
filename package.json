@@ -1,0 +1,42 @@
+{
+  "name": "geoip-native-lite",
+  "version": "0.0.0",
+  "description": "Super-fast IP to country lookups with minimal RAM usage.",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt test",
+    "updatedata": "node scripts/update-data.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chill117/geoip-native-lite"
+  },
+  "author": {
+    "name": "Charles Hill",
+    "email": "chill@degreesofzero.com"
+  },
+  "license": "MIT",
+  "readmeFilename": "readme.md",
+  "bugs": {
+    "url": "https://github.com/chill117/geoip-native-lite/issues"
+  },
+  "dependencies": {
+    "async": "1.5.0",
+    "colors": "1.1.2",
+    "commander": "2.9.0",
+    "ip-address": "5.0.2",
+    "lazy": "1.0.11",
+    "underscore": "1.8.3",
+    "yauzl": "2.3.1"
+  },
+  "devDependencies": {
+    "benchmark": "1.0.0",
+    "chai": "3.4.0",
+    "grunt": "0.4.5",
+    "grunt-jscs": "2.3.0",
+    "grunt-mocha-test": "0.12.7",
+    "load-grunt-config": "0.19.0",
+    "mocha": "2.3.3",
+    "time-grunt": "1.2.2"
+  }
+}
