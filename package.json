@@ -2,6 +2,7 @@
   "name": "geoip-native-lite",
   "version": "0.0.1",
   "description": "Super-fast IP to country lookups with minimal RAM usage.",
+  "keywords": ["geoip", "geo", "geolookup", "country", "lookup", "maxmind", "ip", "ipv4", "ipv6"],
   "main": "index.js",
   "scripts": {
     "test": "grunt test",
