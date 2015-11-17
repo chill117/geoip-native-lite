@@ -26,6 +26,14 @@ npm install geoip-native-lite --save
 This will install `geoip-native-lite` and add it to your application's `package.json` file.
 
 
+## Update Data Files
+
+This module ships with pre-built data files. If you'd like to update the data files for yourself, run the update script like this:
+```
+npm run-script updatedata
+```
+
+
 ## How to Use
 
 * [lookup](#lookup)
