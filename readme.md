@@ -10,7 +10,10 @@ Super-fast IP to country lookups with minimal RAM usage.
 * Fast IP address to country lookup:
   * 1,000,000+ ops/second for IPv4 addresses
   * 500,000+ ops/second for IPv6 addresses
-* Minimal RAM usage
+* Minimal RAM usage:
+  * ~57mb with ipv4 only
+  * ~33mb with ipv6 only
+  * ~70mb with both ipv4 and ipv6
 * Native JavaScript implementation for ease-of-use and portability
 
 
