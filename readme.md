@@ -123,6 +123,8 @@ Usage:
 var GeoIpNativeLite = require('geoip-native-lite');
 
 GeoIpNativeLite.loadDataSync(options);
+
+var country = GeoIpNativeLite.lookup('198.169.246.30');
 ```
 
 Options:
