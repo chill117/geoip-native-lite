@@ -1,8 +1,18 @@
 {
   "name": "geoip-native-lite",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Super-fast IP to country lookups with minimal RAM usage.",
-  "keywords": ["geoip", "geo", "geolookup", "country", "lookup", "maxmind", "ip", "ipv4", "ipv6"],
+  "keywords": [
+    "geoip",
+    "geo",
+    "geolookup",
+    "country",
+    "lookup",
+    "maxmind",
+    "ip",
+    "ipv4",
+    "ipv6"
+  ],
   "main": "index.js",
   "scripts": {
     "test": "grunt test",
@@ -32,12 +42,12 @@
   },
   "devDependencies": {
     "benchmark": "1.0.0",
-    "chai": "3.4.0",
+    "chai": "3.4.1",
     "grunt": "0.4.5",
     "grunt-jscs": "2.3.0",
     "grunt-mocha-test": "0.12.7",
     "load-grunt-config": "0.19.0",
-    "mocha": "2.3.3",
+    "mocha": "2.3.4",
     "time-grunt": "1.2.2"
   }
 }
