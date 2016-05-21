@@ -4,7 +4,6 @@ var _ = require('underscore');
 var Address4 = require('ip-address').Address4;
 var Address6 = require('ip-address').Address6;
 var async = require('async');
-var colors = require('colors');
 var fs = require('fs');
 var https = require('https');
 var lazy = require('lazy');
@@ -16,8 +15,6 @@ var yauzl = require('yauzl');
 var utils = require('../lib/utils');
 
 var packageInfo = JSON.parse(fs.readFileSync(__dirname + '/../package.json', 'utf8'));
-
-console.log(__dirname);
 
 program
 	.version(packageInfo.version)
@@ -171,7 +168,7 @@ function processCountryBlocksIpv4(cb) {
 			var data = line.split(',');
 
 			if (!data || data.length < 2) {
-				console.log('Bad line '.red, line);
+				console.error('[ERROR]', 'Bad line:', line);
 				return;
 			}
 
@@ -215,7 +212,7 @@ function processCountryBlocksIpv6(cb) {
 			var data = line.split(',');
 
 			if (!data || data.length < 2) {
-				console.log('Bad line '.red, line);
+				console.error('[ERROR]', 'Bad line:', line);
 				return;
 			}
 
@@ -259,7 +256,7 @@ function processCountryLocations(cb) {
 			var data = line.split(',');
 
 			if (!data || data.length < 2) {
-				console.log('Bad line '.red, line);
+				console.error('[ERROR]', 'Bad line:', line);
 				return;
 			}
 
@@ -380,10 +377,10 @@ async.seq(download, extract, processData, buildDataFiles, moveTmpFilesToDataDir)
 	cleanup();
 
 	if (error) {
-		console.error(error.message.red);
+		console.error('[ERROR]', error.message);
 		return process.exit(1);
 	}
 
-	console.log('Done'.green);
+	console.log('Done!');
 	process.exit(0);
 });
