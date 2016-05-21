@@ -17,7 +17,7 @@ var GeoIpNativeLite = module.exports = {
 
 	lookup: function(ip) {
 
-		var ipType = ip.indexOf(':') !== -1 ? 'ipv6': 'ipv4';
+		var ipType = ip.indexOf(':') !== -1 ? 'ipv6' : 'ipv4';
 		var list = cache[ipType];
 
 		if (_.isUndefined(list)) {
