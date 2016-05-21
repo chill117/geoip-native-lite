@@ -1,1 +1,1 @@
-Database and Contents Copyright (c) 2015 MaxMind, Inc.
+Database and Contents Copyright (c) 2016 MaxMind, Inc.
