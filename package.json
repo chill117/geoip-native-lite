@@ -16,7 +16,7 @@
   "main": "index.js",
   "scripts": {
     "test": "grunt test",
-    "updatedata": "node scripts/update-data.js"
+    "updatedata": "node scripts/data.js update"
   },
   "repository": {
     "type": "git",
