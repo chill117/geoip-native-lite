@@ -175,7 +175,7 @@ There are a number of ways you can contribute:
 
 ## Tests
 
-To run all tests:
+To run all tests (except benchmarks):
 ```
 grunt test
 ```
