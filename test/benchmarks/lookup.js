@@ -9,37 +9,40 @@ describe('benchmark: lookup', function() {
 
 	var ips = require('../fixtures/ips');
 
-	before(function(done) {
+	describe('operations/second', function() {
 
-		GeoIpNativeLite.loadData({ ipv6: true }, done);
-	});
+		before(function(done) {
 
-	_.each(_.keys(ips), function(ipType) {
+			GeoIpNativeLite.loadData({ ipv6: true }, done);
+		});
 
-		var ipsArray = _.keys(ips[ipType]);
+		_.each(_.keys(ips), function(ipType) {
 
-		it(ipType, function(done) {
+			var ipsArray = _.keys(ips[ipType]);
 
-			this.timeout(15000);
+			it(ipType, function(done) {
 
-			var i = 0;
+				this.timeout(15000);
 
-			var bench = new Benchmark(function() {
-				var ip = ipsArray[i++] || ipsArray[i = 0];
-				GeoIpNativeLite.lookup(ip);
+				var i = 0;
+
+				var bench = new Benchmark(function() {
+					var ip = ipsArray[i++] || ipsArray[i = 0];
+					GeoIpNativeLite.lookup(ip);
+				});
+
+				bench.on('complete', function(result) {
+
+					if (result.target.error) {
+						return done(result.target.error);
+					}
+
+					console.log(result.target.toString());
+					done();
+				});
+
+				bench.run();
 			});
-
-			bench.on('complete', function(result) {
-
-				if (result.target.error) {
-					return done(result.target.error);
-				}
-
-				console.log(result.target.toString());
-				done();
-			});
-
-			bench.run();
 		});
 	});
 });
