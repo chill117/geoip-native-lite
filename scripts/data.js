@@ -8,7 +8,7 @@ var lib = require('../lib');
 
 program.version(packageInfo.version);
 program.command('update').description('rebuild geo-ip data files');
-program.action(function(cmd, options) {
+program.action(function(cmd) {
 
 	if (cmd) {
 
