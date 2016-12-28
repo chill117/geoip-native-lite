@@ -1,5 +1,5 @@
+.eslintrc.js
 .gitignore
-.jscsrc
 .npmignore
 .travis.yml
 grunt
