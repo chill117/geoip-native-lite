@@ -18,7 +18,7 @@ var GeoIpNativeLite = module.exports = {
 	_loading: {},
 
 	// Callbacks waiting for data to be loaded:
-	_waiting: {
+	_queue: {
 		ipv4: [],
 		ipv6: []
 	},
@@ -141,6 +141,15 @@ var GeoIpNativeLite = module.exports = {
 
 	loadDataFromFile: function(ipType, cb) {
 
+		if (GeoIpNativeLite._loading[ipType] === true) {
+			// Already loading this data file asynchronously.
+			// Put the callback in the queue.
+			return GeoIpNativeLite._queue[ipType].push(cb);
+		}
+
+		// Prevent loading from file for this IP type.
+		GeoIpNativeLite._loading[ipType] = true;
+
 		var dataFile = GeoIpNativeLite._dataDir + '/country-' + ipType + '.json';
 
 		fs.readFile(dataFile, 'utf8', function(error, data) {
@@ -149,13 +158,31 @@ var GeoIpNativeLite = module.exports = {
 				return cb(error);
 			}
 
+			var callbacks = [cb];
+
+			if (!_.isEmpty(GeoIpNativeLite._queue[ipType])) {
+				// Add the callbacks from the queue.
+				callbacks = callbacks.concat(GeoIpNativeLite._queue[ipType]);
+				// Clear the queue.
+				GeoIpNativeLite._queue[ipType] = [];
+			}
+
+			// Allow loading again.
+			GeoIpNativeLite._loading[ipType] = false;
+
 			try {
 				data = JSON.parse(data);
 			} catch (error) {
-				return cb(error);
+				// Execute all the callbacks with the error.
+				return _.each(callbacks, function(callback) {
+					callback(error);
+				});
 			}
 
-			cb(null, data);
+			// Execute all the callbacks, passing the data.
+			_.each(callbacks, function(callback) {
+				callback(null, data);
+			});
 		});
 	},
 
