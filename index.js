@@ -6,19 +6,27 @@ var fs = require('fs');
 
 var utils = require('./lib/utils');
 
-/*
-	In-memory data cache.
-*/
-var cache = {};
-
 var GeoIpNativeLite = module.exports = {
 
+	// In-memory data cache:
+	_cache: {},
+
+	// Full path to data directory:
 	_dataDir: __dirname + '/data',
+
+	// Loading flags:
+	_loading: {},
+
+	// Callbacks waiting for data to be loaded:
+	_waiting: {
+		ipv4: [],
+		ipv6: []
+	},
 
 	lookup: function(ip) {
 
 		var ipType = ip.indexOf(':') !== -1 ? 'ipv6' : 'ipv4';
-		var list = cache[ipType];
+		var list = GeoIpNativeLite._cache[ipType];
 
 		if (_.isUndefined(list)) {
 			throw new Error('Data (' + ipType + ') has not been loaded.');
@@ -60,8 +68,8 @@ var GeoIpNativeLite = module.exports = {
 					return next();
 				}
 
-				if (options.cache && cache.ipv4) {
-					return next(null, cache.ipv4);
+				if (options.cache && GeoIpNativeLite._cache.ipv4) {
+					return next(null, GeoIpNativeLite._cache.ipv4);
 				}
 
 				GeoIpNativeLite.loadDataFromFile('ipv4', next);
@@ -73,8 +81,8 @@ var GeoIpNativeLite = module.exports = {
 					return next();
 				}
 
-				if (options.cache && cache.ipv6) {
-					return next(null, cache.ipv6);
+				if (options.cache && GeoIpNativeLite._cache.ipv6) {
+					return next(null, GeoIpNativeLite._cache.ipv6);
 				}
 
 				GeoIpNativeLite.loadDataFromFile('ipv6', next);
@@ -88,8 +96,8 @@ var GeoIpNativeLite = module.exports = {
 
 			if (options.cache) {
 				// Cache the data in memory.
-				_.each(data, function(_data, key) {
-					cache[key] || (cache[key] = _data);
+				_.each(data, function(item, key) {
+					GeoIpNativeLite._cache[key] || (GeoIpNativeLite._cache[key] = item);
 				});
 			}
 
@@ -105,8 +113,8 @@ var GeoIpNativeLite = module.exports = {
 
 		if (options.ipv4) {
 
-			if (options.cache && cache.ipv4) {
-				data.ipv4 = cache.ipv4;
+			if (options.cache && GeoIpNativeLite._cache.ipv4) {
+				data.ipv4 = GeoIpNativeLite._cache.ipv4;
 			} else {
 				data.ipv4 = GeoIpNativeLite.loadDataFromFileSync('ipv4');
 			}
@@ -114,8 +122,8 @@ var GeoIpNativeLite = module.exports = {
 
 		if (options.ipv6) {
 
-			if (options.cache && cache.ipv6) {
-				data.ipv6 = cache.ipv6;
+			if (options.cache && GeoIpNativeLite._cache.ipv6) {
+				data.ipv6 = GeoIpNativeLite._cache.ipv6;
 			} else {
 				data.ipv6 = GeoIpNativeLite.loadDataFromFileSync('ipv6');
 			}
@@ -124,7 +132,7 @@ var GeoIpNativeLite = module.exports = {
 		if (options.cache) {
 			// Cache the data in memory.
 			_.each(data, function(_data, key) {
-				cache[key] || (cache[key] = _data);
+				GeoIpNativeLite._cache[key] || (GeoIpNativeLite._cache[key] = _data);
 			});
 		}
 

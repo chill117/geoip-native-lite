@@ -7,7 +7,7 @@ var fs = require('fs');
 
 var lib = require('../../../lib');
 var fixturesDir = __dirname + '/../../fixtures/data';
-var ips = require('../../fixtures/ips');
+var ipAddresses = require('../../fixtures/ipAddresses');
 var GeoIpNativeLite = require('../../../');
 
 describe('lib/data', function() {
@@ -143,7 +143,7 @@ describe('lib/data', function() {
 
 						try {
 							_.each(['ipv4', 'ipv6'], function(ipType) {
-								_.each(ips[ipType], function(country, ip_address) {
+								_.each(ipAddresses[ipType], function(country, ip_address) {
 									var result = GeoIpNativeLite.lookup(ip_address);
 									try {
 										expect(result).to.equal(country);
