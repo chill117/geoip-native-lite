@@ -3,6 +3,7 @@
 var _ = require('underscore');
 var async = require('async');
 var fs = require('fs');
+var path = require('path');
 
 var utils = require('./lib/utils');
 
@@ -12,7 +13,7 @@ var GeoIpNativeLite = module.exports = {
 	_cache: {},
 
 	// Full path to data directory:
-	_dataDir: __dirname + '/data',
+	_dataDir: path.join(__dirname, 'data'),
 
 	// Loading flags:
 	_loading: {},
@@ -150,7 +151,7 @@ var GeoIpNativeLite = module.exports = {
 		// Prevent loading from file for this IP type.
 		GeoIpNativeLite._loading[ipType] = true;
 
-		var dataFile = GeoIpNativeLite._dataDir + '/country-' + ipType + '.json';
+		var dataFile = path.join(GeoIpNativeLite._dataDir, 'country-' + ipType + '.json');
 
 		fs.readFile(dataFile, 'utf8', function(error, data) {
 
@@ -188,7 +189,7 @@ var GeoIpNativeLite = module.exports = {
 
 	loadDataFromFileSync: function(ipType) {
 
-		var dataFile = GeoIpNativeLite._dataDir + '/country-' + ipType + '.json';
+		var dataFile = path.join(GeoIpNativeLite._dataDir, 'country-' + ipType + '.json');
 		var data = fs.readFileSync(dataFile, 'utf8');
 
 		return JSON.parse(data);

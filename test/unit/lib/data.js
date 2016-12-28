@@ -4,17 +4,37 @@ var _ = require('underscore');
 var async = require('async');
 var expect = require('chai').expect;
 var fs = require('fs');
+var path = require('path');
 
 var lib = require('../../../lib');
-var fixturesDir = __dirname + '/../../fixtures/data';
-var ipAddresses = require('../../fixtures/ipAddresses');
+var ipAddresses = require(__dirname + '/../../fixtures/ipAddresses');
 var GeoIpNativeLite = require('../../../');
 
 describe('lib/data', function() {
 
+	var originalDataDir, originalTmpDir;
+
+	before(function() {
+
+		// Save the original directory paths.
+		originalDataDir = lib.data.config.dataDir;
+		originalTmpDir = lib.data.config.tmpDir;
+
+		// Override directory paths.
+		lib.data.config.dataDir = path.join(__dirname, '..', '..', 'data');
+		lib.data.config.tmpDir = path.join(lib.data.config.dataDir, 'tmp');
+	});
+
 	beforeEach(lib.data.cleanup);
 	beforeEach(lib.data.setup);
 	after(lib.data.cleanup);
+
+	after(function() {
+
+		// Restore directory paths to their original values.
+		lib.data.config.dataDir = originalDataDir;
+		lib.data.config.tmpDir = originalTmpDir;
+	});
 
 	describe('download()', function() {
 
@@ -34,7 +54,7 @@ describe('lib/data', function() {
 					return done(error);
 				}
 
-				fs.readdir(lib.data._tmpDir, function(error, files) {
+				fs.readdir(lib.data.config.tmpDir, function(error, files) {
 
 					if (error) {
 						return done(error);
@@ -71,7 +91,7 @@ describe('lib/data', function() {
 					return done(error);
 				}
 
-				fs.readdir(lib.data._tmpDir, function(error, files) {
+				fs.readdir(lib.data.config.tmpDir, function(error, files) {
 
 					if (error) {
 						return done(error);
@@ -117,7 +137,7 @@ describe('lib/data', function() {
 					return done(error);
 				}
 
-				fs.readdir(lib.data._dataDir, function(error, files) {
+				fs.readdir(lib.data.config.dataDir, function(error, files) {
 
 					if (error) {
 						return done(error);
@@ -143,12 +163,12 @@ describe('lib/data', function() {
 
 						try {
 							_.each(['ipv4', 'ipv6'], function(ipType) {
-								_.each(ipAddresses[ipType], function(country, ip_address) {
-									var result = GeoIpNativeLite.lookup(ip_address);
+								_.each(ipAddresses[ipType], function(country, ipAddress) {
+									var result = GeoIpNativeLite.lookup(ipAddress);
 									try {
 										expect(result).to.equal(country);
 									} catch (error) {
-										throw new Error('Wrong country (' + result + ') for ' + ip_address);
+										throw new Error('Wrong country (' + result + ') for ' + ipAddress);
 									}
 								});
 							});
@@ -168,7 +188,8 @@ function placeZipArchiveFixture(cb) {
 
 	// Place the sample ZIP archive in the temp directory.
 
-	var dest = lib.data._tmpDir + '/GeoLite2-Country-CSV.zip';
+	var src = path.join(__dirname, '..', '..', 'fixtures', 'data', 'GeoLite2-Country-CSV.zip');
+	var dest = path.join(lib.data.config.tmpDir, 'GeoLite2-Country-CSV.zip');
 	var done = _.once(cb);
 
 	fs.stat(dest, function(error) {
@@ -178,7 +199,6 @@ function placeZipArchiveFixture(cb) {
 			return done();
 		}
 
-		var src = fixturesDir + '/GeoLite2-Country-CSV.zip';
 		var readStream = fs.createReadStream(src);
 		var writeStream = fs.createWriteStream(dest);
 
@@ -191,18 +211,18 @@ function placeZipArchiveFixture(cb) {
 
 function deleteDataFiles(cb) {
 
-	fs.readdir(lib.data._dataDir, function(error, files) {
+	fs.readdir(lib.data.config.dataDir, function(error, files) {
 
 		async.each(files, function(file, next) {
 
-			fs.stat(lib.data._dataDir + '/' + file, function(error, stat) {
+			fs.stat(path.join(lib.data.config.dataDir, file), function(error, stat) {
 
 				// Only delete files.
 				if (error || !stat.isFile()) {
 					return next();
 				}
 
-				fs.unlink(lib.data._dataDir + '/' + file, next);
+				fs.unlink(path.join(lib.data.config.dataDir, file), next);
 			});
 
 		}, cb);
