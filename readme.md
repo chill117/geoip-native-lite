@@ -30,7 +30,7 @@ This will install `geoip-native-lite` and add it to your application's `package.
 
 This module ships with pre-built data files. If you'd like to update the data files for yourself, run the update script like this:
 ```
-npm run-script updatedata
+npm run updatedata
 ```
 
 
@@ -51,26 +51,20 @@ Usage:
 var GeoIpNativeLite = require('geoip-native-lite');
 
 // Must load data before lookups can be performed.
-// If you will need ipv6 support
-GeoIpNativeLite.loadData({
+GeoIpNativeLite.loadDataSync();
 
-	// Only IPv4 data is loaded by default.
-	// If you need to perform lookups on ipv6 data as well, use the `ipv6` option like this:
-	ipv6: true
+// Data loaded successfully.
+// Ready for lookups.
+var ip = '128.21.16.34';
+var country = GeoIpNativeLite.lookup(ip);
 
-}, function(error) {
-
-	if (error) {
-		// Something went wrong.
-	} else {
-		// Data loaded successfully.
-		// Ready for lookups.
-		var ip = '128.21.16.34';
-		var country = GeoIpNativeLite.lookup(ip);
-		console.log(ip, ' is geo-located in ', country);
-	}
-});
+if (country) {
+	console.log(ip, 'is geo-located in', country.toUpperCase());
+} else {
+	console.log('Failed to geo-locate the IP address:', ip);
+}
 ```
+
 
 ### loadData
 
