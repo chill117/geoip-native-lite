@@ -1,6 +1,6 @@
 {
   "name": "geoip-native-lite",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Super-fast IP to country lookups with minimal RAM usage.",
   "keywords": [
     "geoip",
