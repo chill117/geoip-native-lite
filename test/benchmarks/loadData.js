@@ -22,7 +22,7 @@ describe('benchmark: loadData', function() {
 
 		it('ipv4 and ipv6', function(done) {
 
-			var maxMemoryUsage = 54000000;
+			var maxMemoryUsage = 100000000;
 
 			var options = {
 				ipv4: true,

@@ -49,7 +49,7 @@ var GeoIpNativeLite = module.exports = {
 			return null;
 		}
 
-		return list[index].c;
+		return list[index][0];
 	},
 
 	loadData: function(options, cb) {
@@ -229,16 +229,16 @@ var GeoIpNativeLite = module.exports = {
 
 	inRangeIpv4: function(ipRange, ip) {
 
-		var start = ipRange.s;
-		var end = ipRange.e || ipRange.s;
+		var start = ipRange[1];
+		var end = ipRange[2] || ipRange[1];
 
 		return ip < start ? 1 : ip > end ? -1 : 0;
 	},
 
 	inRangeIpv6: function(ipRange, ip) {
 
-		var start = ipRange.s;
-		var end = ipRange.e;
+		var start = ipRange[1];
+		var end = ipRange[2];
 
 		if (!end) {
 			return GeoIpNativeLite.compareIpv6(start, ip);
