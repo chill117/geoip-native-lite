@@ -15,7 +15,12 @@
   ],
   "main": "index.js",
   "scripts": {
-    "test": "grunt test",
+    "benchmarks": "mocha test/benchmarks/ --recursive --reporter spec --ui bdd",
+    "lint": "eslint --config .eslintrc.js *.js lib/*.js scripts/*.js test/**/*.js",
+    "prepublish": "npm run test # runs before `npm publish`",
+    "pretest": "npm run lint # runs before `npm test`",
+    "test": "npm run test:unit",
+    "test:unit": "mocha test/unit/ --recursive --reporter spec --ui bdd",
     "updatedata": "node scripts/data.js update"
   },
   "repository": {
@@ -43,12 +48,6 @@
   "devDependencies": {
     "benchmark": "2.1.4",
     "chai": "4.1.2",
-    "debug": "3.1.0",
-    "grunt": "1.0.3",
-    "grunt-eslint": "21.0.0",
-    "grunt-mocha-test": "0.13.3",
-    "load-grunt-config": "0.19.2",
-    "mocha": "5.2.0",
-    "time-grunt": "1.4.0"
+    "debug": "3.1.0"
   }
 }

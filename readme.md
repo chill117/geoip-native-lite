@@ -10,10 +10,7 @@ Super-fast IP to country lookups with minimal RAM usage.
 * Fast IP address to country lookup:
   * 1,000,000+ ops/second for IPv4 addresses
   * 500,000+ ops/second for IPv6 addresses
-* Minimal RAM usage:
-  * ~57mb with ipv4 only
-  * ~33mb with ipv6 only
-  * ~70mb with both ipv4 and ipv6
+* Minimal RAM usage
 * Native JavaScript implementation for ease-of-use and portability
 
 
@@ -169,24 +166,28 @@ There are a number of ways you can contribute:
 
 ## Tests
 
+To run the tests, you will need to install the following:
+* [mocha](https://mochajs.org/) - `npm install -g mocha`
+* [eslint](https://eslint.org/) - `npm install -g eslint`
+
 To run all tests (except benchmarks):
 ```
-grunt test
+npm test
+```
+
+To run benchmarks:
+```
+npm run test:benchmarks
 ```
 
 To run only unit tests:
 ```
-grunt test:unit
+npm run test:unit
 ```
 
 To run only code-style checks:
 ```
-grunt test:code-style
-```
-
-To run only benchmarks:
-```
-grunt test:benchmarks
+npm run lint
 ```
 
 
