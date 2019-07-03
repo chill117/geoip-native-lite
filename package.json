@@ -17,8 +17,8 @@
   "scripts": {
     "benchmarks": "./node_modules/.bin/mocha test/benchmarks/ --recursive --reporter spec --ui bdd",
     "lint": "./node_modules/.bin/eslint --config .eslintrc.js *.js lib/*.js scripts/*.js test/**/*.js",
-    "prepublish": "npm run test # runs before `npm publish`",
-    "pretest": "npm run lint # runs before `npm test`",
+    "prepublish": "npm run test",
+    "pretest": "npm run lint",
     "test": "npm run test:unit",
     "test:unit": "./node_modules/.bin/mocha test/unit/ --recursive --reporter spec --ui bdd",
     "updatedata": "node scripts/data.js update"
