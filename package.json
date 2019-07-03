@@ -15,12 +15,12 @@
   ],
   "main": "index.js",
   "scripts": {
-    "benchmarks": "mocha test/benchmarks/ --recursive --reporter spec --ui bdd",
-    "lint": "eslint --config .eslintrc.js *.js lib/*.js scripts/*.js test/**/*.js",
+    "benchmarks": "./node_modules/.bin/mocha test/benchmarks/ --recursive --reporter spec --ui bdd",
+    "lint": "./node_modules/.bin/eslint --config .eslintrc.js *.js lib/*.js scripts/*.js test/**/*.js",
     "prepublish": "npm run test # runs before `npm publish`",
     "pretest": "npm run lint # runs before `npm test`",
     "test": "npm run test:unit",
-    "test:unit": "mocha test/unit/ --recursive --reporter spec --ui bdd",
+    "test:unit": "./node_modules/.bin/mocha test/unit/ --recursive --reporter spec --ui bdd",
     "updatedata": "node scripts/data.js update"
   },
   "repository": {
@@ -48,6 +48,8 @@
   "devDependencies": {
     "benchmark": "2.1.4",
     "chai": "4.1.2",
-    "debug": "3.1.0"
+    "debug": "3.1.0",
+    "eslint": "6.0.1",
+    "mocha": "6.1.4"
   }
 }
