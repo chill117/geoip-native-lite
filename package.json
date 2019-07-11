@@ -38,8 +38,8 @@
   },
   "dependencies": {
     "async": "3.1.0",
-    "commander": "2.17.1",
-    "ip-address": "5.8.9",
+    "commander": "2.20.0",
+    "ip-address": "5.9.2",
     "lazy": "1.0.11",
     "mkdirp": "0.5.1",
     "underscore": "1.9.1",
@@ -47,8 +47,8 @@
   },
   "devDependencies": {
     "benchmark": "2.1.4",
-    "chai": "4.1.2",
-    "debug": "3.1.0",
+    "chai": "4.2.0",
+    "debug": "4.1.1",
     "eslint": "6.0.1",
     "mocha": "6.1.4"
   }
