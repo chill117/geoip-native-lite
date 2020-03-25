@@ -1,8 +1,10 @@
 # geoip-native-lite
 
-Super-fast IP to country lookups with minimal RAM usage.
+__!! NOT MAINTAINED !!__
 
-[![Build Status](https://travis-ci.org/chill117/geoip-native-lite.svg?branch=master)](https://travis-ci.org/chill117/geoip-native-lite)
+This project is no longer maintained. Please use [geoip-lite](https://github.com/bluesmoon/node-geoip) instead.
+
+__!! NOT MAINTAINED !!__
 
 
 ## Goals
