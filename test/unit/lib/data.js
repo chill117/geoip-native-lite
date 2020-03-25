@@ -36,7 +36,7 @@ describe('lib/data', function() {
 		lib.data.config.tmpDir = originalTmpDir;
 	});
 
-	describe('download()', function() {
+	describe.skip('download()', function() {
 
 		it('should be a function', function() {
 
